@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package is;
+
+// all units in meters
+message AreaLimits {
+  float xmin = 1;
+  float xmax = 2;
+  float ymin = 3;
+  float ymax = 4;
+}
+
+// x and y in meters and length in pixels
+message ReferencialProperties {
+  float x = 1;
+  float y = 2;
+  uint32 length = 3;
+}
+
+message SkeletonsHeatmapOptions {
+  string broker_uri = 1;
+  string zipkin_host = 2;
+  uint32 zipkin_port = 3;
+  uint32 topic_id = 4;
+  AreaLimits limits = 5;
+  float bins_step = 6;
+  float output_scale = 7;
+  ReferencialProperties referencial = 8;
+  bool draw_grid = 9;
+  bool flip_horizontal = 10;
+  bool flip_vertical = 11;
+  bool log_scale = 12;
+  bool average_coordinates = 13;
+}

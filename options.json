@@ -1,0 +1,24 @@
+{
+  "broker_uri": "amqp://10.10.2.15:30000",
+  "zipkin_host": "10.10.2.15",
+  "zipkin_port": 30200,
+  "topic_id": 1000,
+  "limits": {
+    "xmin": -2.5,
+    "xmax": 5.0,
+    "ymin": -2.5,
+    "ymax": 5.0
+  },
+  "bins_step": 0.05,
+  "output_scale": 5.0,
+  "referencial": {
+    "x": 0.0,
+    "y": 0.0,
+    "length": 50
+  },
+  "draw_grid": true,
+  "flip_horizontal": true,
+  "flip_vertical": false,
+  "log_scale": true,
+  "average_coordinates": false
+}
