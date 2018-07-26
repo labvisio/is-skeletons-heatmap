@@ -31,4 +31,8 @@ message SkeletonsHeatmapOptions {
   bool flip_vertical = 11;
   bool log_scale = 12;
   bool average_coordinates = 13;
+  // if less or equal zero, the histogram will accumulate forever,
+  // otherwise N latest samples will be stored to show heatmap of
+  // last N samples. The maximum number of samples is 100000.
+  int32 samples = 14; 
 }

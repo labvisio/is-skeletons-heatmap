@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='options.proto',
   package='is',
   syntax='proto3',
-  serialized_pb=_b('\n\roptions.proto\x12\x02is\"D\n\nAreaLimits\x12\x0c\n\x04xmin\x18\x01 \x01(\x02\x12\x0c\n\x04xmax\x18\x02 \x01(\x02\x12\x0c\n\x04ymin\x18\x03 \x01(\x02\x12\x0c\n\x04ymax\x18\x04 \x01(\x02\"=\n\x15ReferencialProperties\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\x0e\n\x06length\x18\x03 \x01(\r\"\xd5\x02\n\x17SkeletonsHeatmapOptions\x12\x12\n\nbroker_uri\x18\x01 \x01(\t\x12\x13\n\x0bzipkin_host\x18\x02 \x01(\t\x12\x13\n\x0bzipkin_port\x18\x03 \x01(\r\x12\x10\n\x08topic_id\x18\x04 \x01(\r\x12\x1e\n\x06limits\x18\x05 \x01(\x0b\x32\x0e.is.AreaLimits\x12\x11\n\tbins_step\x18\x06 \x01(\x02\x12\x14\n\x0coutput_scale\x18\x07 \x01(\x02\x12.\n\x0breferencial\x18\x08 \x01(\x0b\x32\x19.is.ReferencialProperties\x12\x11\n\tdraw_grid\x18\t \x01(\x08\x12\x17\n\x0f\x66lip_horizontal\x18\n \x01(\x08\x12\x15\n\rflip_vertical\x18\x0b \x01(\x08\x12\x11\n\tlog_scale\x18\x0c \x01(\x08\x12\x1b\n\x13\x61verage_coordinates\x18\r \x01(\x08\x62\x06proto3')
+  serialized_pb=_b('\n\roptions.proto\x12\x02is\"D\n\nAreaLimits\x12\x0c\n\x04xmin\x18\x01 \x01(\x02\x12\x0c\n\x04xmax\x18\x02 \x01(\x02\x12\x0c\n\x04ymin\x18\x03 \x01(\x02\x12\x0c\n\x04ymax\x18\x04 \x01(\x02\"=\n\x15ReferencialProperties\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\x0e\n\x06length\x18\x03 \x01(\r\"\xe6\x02\n\x17SkeletonsHeatmapOptions\x12\x12\n\nbroker_uri\x18\x01 \x01(\t\x12\x13\n\x0bzipkin_host\x18\x02 \x01(\t\x12\x13\n\x0bzipkin_port\x18\x03 \x01(\r\x12\x10\n\x08topic_id\x18\x04 \x01(\r\x12\x1e\n\x06limits\x18\x05 \x01(\x0b\x32\x0e.is.AreaLimits\x12\x11\n\tbins_step\x18\x06 \x01(\x02\x12\x14\n\x0coutput_scale\x18\x07 \x01(\x02\x12.\n\x0breferencial\x18\x08 \x01(\x0b\x32\x19.is.ReferencialProperties\x12\x11\n\tdraw_grid\x18\t \x01(\x08\x12\x17\n\x0f\x66lip_horizontal\x18\n \x01(\x08\x12\x15\n\rflip_vertical\x18\x0b \x01(\x08\x12\x11\n\tlog_scale\x18\x0c \x01(\x08\x12\x1b\n\x13\x61verage_coordinates\x18\r \x01(\x08\x12\x0f\n\x07samples\x18\x0e \x01(\x05\x62\x06proto3')
 )
 
 
@@ -220,6 +220,13 @@ _SKELETONSHEATMAPOPTIONS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='samples', full_name='is.SkeletonsHeatmapOptions.samples', index=13,
+      number=14, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -233,7 +240,7 @@ _SKELETONSHEATMAPOPTIONS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=155,
-  serialized_end=496,
+  serialized_end=513,
 )
 
 _SKELETONSHEATMAPOPTIONS.fields_by_name['limits'].message_type = _AREALIMITS

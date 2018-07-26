@@ -20,5 +20,6 @@
   "flip_horizontal": true,
   "flip_vertical": false,
   "log_scale": true,
-  "average_coordinates": false
+  "average_coordinates": false,
+  "samples": 100000
 }

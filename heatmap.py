@@ -1,9 +1,11 @@
 import cv2
 import numpy as np
+from scipy import sparse
 import matplotlib.pyplot as plt
 from options_pb2 import SkeletonsHeatmapOptions
 from is_msgs.image_pb2 import ObjectAnnotations
 from utils import to_pb_image
+from collections import deque
 
 class SkeletonsHeatmap:
     def __init__(self, options):
@@ -28,6 +30,11 @@ class SkeletonsHeatmap:
         self.__red = (0, 0, 255)
         self.__green = (0, 255, 0)
         self.__imH = np.empty(1, dtype=np.uint8)
+        if self.__op.samples > 100000:
+            raise Exception('Number of samples must be less or equal than 100000.')
+        self.__infinity_mode = self.__op.samples < 1
+        maxlen = max(0, self.__op.samples)
+        self.__sparse_histograms = deque([], maxlen=maxlen)
 
 
     def update_heatmap(self, skeletons):
@@ -37,8 +44,16 @@ class SkeletonsHeatmap:
             x.extend(self.__get_coordinate(sk, 'x', avg))
             y.extend(self.__get_coordinate(sk, 'y', avg))
         h, _, _ = np.histogram2d(np.array(x), np.array(y), bins=self.__bins)
+        self.__sparse_histograms.append(sparse.csr_matrix(h.T))
         self.__linH += h.T
-        H = np.log10(self.__linH + 1.0) if self.__op.log_scale else self.__linH
+        if not self.__infinity_mode:
+            oldest_h = sparse.csr_matrix.todense(self.__sparse_histograms[0])
+            self.__linH -= oldest_h
+        if self.__op.log_scale:
+            self.__linH = np.clip(self.__linH, a_min=1.0, a_max=None)
+            H = np.log10(self.__linH)
+        else: 
+            H = self.__linH
         norm = plt.Normalize(vmin=H.min(), vmax=H.max())
         self.__imH = (255 * self.__cmap(norm(H))[:, :, :-1]).astype(np.uint8)
         self.__imH = cv2.resize(self.__imH, dsize=(0, 0), fx=self.__scale, fy=self.__scale)
