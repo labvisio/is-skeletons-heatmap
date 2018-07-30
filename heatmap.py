@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from scipy import sparse
 import matplotlib.pyplot as plt
-from options_pb2 import SkeletonsHeatmapOptions
+from options_pb2 import SkeletonsHeatmapOptions, RotateFlags
 from is_msgs.image_pb2 import ObjectAnnotations
 from utils import to_pb_image
 from collections import deque
@@ -25,7 +25,7 @@ class SkeletonsHeatmap:
         self.__dy = self.__op.limits.ymax - self.__op.limits.ymin
         self.__linH = np.zeros(size, dtype=np.float64)
         self.__cmap = plt.cm.jet_r
-        self.__scale = self.__op.output_scale
+        self.__scale = self.__op.output_scale.value
         self.__white = (255, 255, 255)
         self.__red = (0, 0, 255)
         self.__green = (0, 255, 0)
@@ -56,15 +56,17 @@ class SkeletonsHeatmap:
             H = self.__linH
         norm = plt.Normalize(vmin=H.min(), vmax=H.max())
         self.__imH = (255 * self.__cmap(norm(H))[:, :, :-1]).astype(np.uint8)
-        self.__imH = cv2.resize(self.__imH, dsize=(0, 0), fx=self.__scale, fy=self.__scale)
 
+        if self.__op.HasField('output_scale'):
+            self.__imH = cv2.resize(self.__imH, dsize=(0, 0), fx=self.__scale, fy=self.__scale)
         if self.__op.draw_grid:
             self.__draw_grid()
         if self.__op.HasField('referencial'):
             self.__draw_referencial()
         if self.__flip:
             self.__imH = cv2.flip(self.__imH, self.__flip_code)
-
+        if self.__op.output_rotate != RotateFlags.Value('NONE'):
+            self.__imH = cv2.rotate(self.__imH, self.__op.output_rotate - 1)
 
     def get_np_image(self):
         return self.__imH
