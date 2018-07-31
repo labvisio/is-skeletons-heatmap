@@ -11,21 +11,22 @@ ops = load_options()
 
 c = Channel(ops.broker_uri)
 sb = Subscription(c)
+service_name = 'Skeletons.Heatmap'
 tracer = ZipkinTracer(host_name=ops.zipkin_host,
-                      port=ops.zipkin_port, service_name='Skeletons')
+                      port=ops.zipkin_port, service_name=service_name)
 
 sks_hm = SkeletonsHeatmap(ops)
 
-@tracer.interceptor('Heatmap')
+@tracer.interceptor('Render')
 def on_detections(msg, context):
     sks = msg.unpack(ObjectAnnotations)
     sks_hm.update_heatmap(sks)
     im_pb = sks_hm.get_pb_image()
     msg = Message()
     msg.pack(im_pb)
-    msg.set_topic('Skeletons.Heatmap')
+    msg.set_topic(service_name)
     msg.add_metadata(context)
     c.publish(msg)
 
-sb.subscribe('Skeletons.Localizations', on_detections)
+sb.subscribe('Skeletons.Localization', on_detections)
 c.listen()
