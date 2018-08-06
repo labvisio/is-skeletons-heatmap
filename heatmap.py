@@ -6,6 +6,7 @@ from options_pb2 import SkeletonsHeatmapOptions, RotateFlags
 from is_msgs.image_pb2 import ObjectAnnotations
 from utils import to_pb_image
 from collections import deque
+from transformation import TransformationFetcher, transform_object_annotations
 
 class SkeletonsHeatmap:
     def __init__(self, options):
@@ -35,14 +36,41 @@ class SkeletonsHeatmap:
         self.__infinity_mode = self.__op.samples < 1
         maxlen = max(0, self.__op.samples)
         self.__sparse_histograms = deque([], maxlen=maxlen)
+        self._tf_fetcher = TransformationFetcher(self.__op.broker_uri)
 
 
     def update_heatmap(self, skeletons):
+        exception_msg = "Invalid type. Can be either a list of "
+        exception_msg += "'ObjectAnnotations' or a single 'ObjectAnnotations'"
+        
+        if isinstance(skeletons, list):
+            if not all(map(lambda x: isinstance(x, ObjectAnnotations), skeletons)):
+                exception_msg += "\n Given a list containing at least one "
+                exception_msg += "that isn't an 'ObjectAnnotations'"
+                raise RuntimeError(exception_msg)
+        elif not isinstance(skeletons, ObjectAnnotations):
+            exception_msg += "\nGiven a {}".format(type(skeletons))
+            raise RuntimeError(exception_msg)
+        
+
+        if isinstance(skeletons, ObjectAnnotations): 
+            list_annotations = [skeletons]
+        else :
+            list_annotations = skeletons
+        
         x, y = [], []
         avg = self.__op.average_coordinates
-        for sk in skeletons.objects:
-            x.extend(self.__get_coordinate(sk, 'x', avg))
-            y.extend(self.__get_coordinate(sk, 'y', avg))
+        for skeletons in list_annotations:
+            _from, _to = skeletons.frame_id, self.__op.frame_id
+            if _from != _to:
+                tf = self._tf_fetcher.get_transformation(_from, _to)
+                if tf is None:
+                    continue
+                skeletons = transform_object_annotations(skeletons, tf, _to)
+            for sk in skeletons.objects:
+                x.extend(self.__get_coordinate(sk, 'x', avg))
+                y.extend(self.__get_coordinate(sk, 'y', avg))
+        
         h, _, _ = np.histogram2d(np.array(x), np.array(y), bins=self.__bins)
         self.__sparse_histograms.append(sparse.csr_matrix(h.T))
         self.__linH += h.T
@@ -54,19 +82,26 @@ class SkeletonsHeatmap:
             H = np.log10(self.__linH)
         else: 
             H = self.__linH
+        
         norm = plt.Normalize(vmin=H.min(), vmax=H.max())
         self.__imH = (255 * self.__cmap(norm(H))[:, :, :-1]).astype(np.uint8)
 
         if self.__op.HasField('output_scale'):
-            self.__imH = cv2.resize(self.__imH, dsize=(0, 0), fx=self.__scale, fy=self.__scale)
+            self.__imH = cv2.resize(
+                src=self.__imH, 
+                dsize=(0, 0), 
+                fx=self.__scale, 
+                fy=self.__scale
+            )
         if self.__op.draw_grid:
             self.__draw_grid()
-        if self.__op.HasField('referencial'):
-            self.__draw_referencial()
+        if self.__op.HasField('referential'):
+            self.__draw_referential()
         if self.__flip:
             self.__imH = cv2.flip(self.__imH, self.__flip_code)
         if self.__op.output_rotate != RotateFlags.Value('NONE'):
             self.__imH = cv2.rotate(self.__imH, self.__op.output_rotate - 1)
+
 
     def get_np_image(self):
         return self.__imH
@@ -95,13 +130,13 @@ class SkeletonsHeatmap:
             self.__imH = cv2.line(self.__imH, pt1=(0, y), pt2=(width, y), color=self.__white)
 
 
-    def __draw_referencial(self):
+    def __draw_referential(self):
         xmin, xmax = self.__op.limits.xmin, self.__op.limits.xmax
         ymin, ymax = self.__op.limits.ymin, self.__op.limits.ymax
         width, height = self.__imH.shape[1], self.__imH.shape[0]
-        px = int(width * (self.__op.referencial.x - xmin) / self.__dx)
-        py = int(height * (self.__op.referencial.y - ymin) / self.__dy)
-        length = self.__op.referencial.length
+        px = int(width * (self.__op.referential.x - xmin) / self.__dx)
+        py = int(height * (self.__op.referential.y - ymin) / self.__dy)
+        length = self.__op.referential.length
         pt1, pt2_x, pt2_y = (px, py), (px + length, py), (px, py + length)
         self.__imH = cv2.arrowedLine(self.__imH, pt1=pt1, pt2=pt2_x, color=self.__red, thickness=3, tipLength=0.2)
         self.__imH = cv2.arrowedLine(self.__imH, pt1=pt1, pt2=pt2_y, color=self.__green, thickness=3, tipLength=0.2)

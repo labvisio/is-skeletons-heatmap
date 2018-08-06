@@ -1,7 +1,10 @@
-FROM python:3
+FROM is-skeletons-heatmap/dev
 
 WORKDIR /heatmap
-ADD . /heatmap/
-RUN pip install --user --upgrade pip       \
- && pip install --user -r requirements.txt
+COPY service.py        \
+     utils.py          \
+     transformation.py \
+     heatmap.py        \
+     options_pb2.py    \
+     options.json /heatmap/
 CMD [ "python", "service.py" ]

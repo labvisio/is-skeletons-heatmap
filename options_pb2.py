@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='options.proto',
   package='is',
   syntax='proto3',
-  serialized_pb=_b('\n\roptions.proto\x12\x02is\x1a\x1egoogle/protobuf/wrappers.proto\"D\n\nAreaLimits\x12\x0c\n\x04xmin\x18\x01 \x01(\x02\x12\x0c\n\x04xmax\x18\x02 \x01(\x02\x12\x0c\n\x04ymin\x18\x03 \x01(\x02\x12\x0c\n\x04ymax\x18\x04 \x01(\x02\"I\n\x15ReferencialProperties\x12\n\n\x02id\x18\x01 \x01(\x03\x12\t\n\x01x\x18\x02 \x01(\x02\x12\t\n\x01y\x18\x03 \x01(\x02\x12\x0e\n\x06length\x18\x04 \x01(\r\"\xab\x03\n\x17SkeletonsHeatmapOptions\x12\x12\n\nbroker_uri\x18\x01 \x01(\t\x12\x13\n\x0bzipkin_host\x18\x02 \x01(\t\x12\x13\n\x0bzipkin_port\x18\x03 \x01(\r\x12\x10\n\x08topic_id\x18\x04 \x01(\r\x12\x1e\n\x06limits\x18\x05 \x01(\x0b\x32\x0e.is.AreaLimits\x12\x11\n\tbins_step\x18\x06 \x01(\x02\x12\x31\n\x0coutput_scale\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.FloatValue\x12&\n\routput_rotate\x18\x0f \x01(\x0e\x32\x0f.is.RotateFlags\x12.\n\x0breferencial\x18\x08 \x01(\x0b\x32\x19.is.ReferencialProperties\x12\x11\n\tdraw_grid\x18\t \x01(\x08\x12\x17\n\x0f\x66lip_horizontal\x18\n \x01(\x08\x12\x15\n\rflip_vertical\x18\x0b \x01(\x08\x12\x11\n\tlog_scale\x18\x0c \x01(\x08\x12\x1b\n\x13\x61verage_coordinates\x18\r \x01(\x08\x12\x0f\n\x07samples\x18\x0e \x01(\x05*L\n\x0bRotateFlags\x12\x08\n\x04NONE\x10\x00\x12\x10\n\x0cROTATE_90_CW\x10\x01\x12\x0e\n\nROTATE_180\x10\x02\x12\x11\n\rROTATE_90_CCW\x10\x03\x62\x06proto3')
+  serialized_pb=_b('\n\roptions.proto\x12\x02is\x1a\x1egoogle/protobuf/wrappers.proto\"D\n\nAreaLimits\x12\x0c\n\x04xmin\x18\x01 \x01(\x02\x12\x0c\n\x04xmax\x18\x02 \x01(\x02\x12\x0c\n\x04ymin\x18\x03 \x01(\x02\x12\x0c\n\x04ymax\x18\x04 \x01(\x02\"=\n\x15ReferentialProperties\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\x0e\n\x06length\x18\x03 \x01(\r\"\xd0\x03\n\x17SkeletonsHeatmapOptions\x12\x12\n\nbroker_uri\x18\x01 \x01(\t\x12\x13\n\x0bzipkin_host\x18\x02 \x01(\t\x12\x13\n\x0bzipkin_port\x18\x03 \x01(\r\x12\x10\n\x08topic_id\x18\x04 \x01(\r\x12\x1e\n\x06limits\x18\x05 \x01(\x0b\x32\x0e.is.AreaLimits\x12\x11\n\tbins_step\x18\x06 \x01(\x02\x12\x31\n\x0coutput_scale\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.FloatValue\x12&\n\routput_rotate\x18\x0f \x01(\x0e\x32\x0f.is.RotateFlags\x12\x10\n\x08\x66rame_id\x18\x11 \x01(\x03\x12.\n\x0breferential\x18\x08 \x01(\x0b\x32\x19.is.ReferentialProperties\x12\x11\n\tdraw_grid\x18\t \x01(\x08\x12\x17\n\x0f\x66lip_horizontal\x18\n \x01(\x08\x12\x15\n\rflip_vertical\x18\x0b \x01(\x08\x12\x11\n\tlog_scale\x18\x0c \x01(\x08\x12\x1b\n\x13\x61verage_coordinates\x18\r \x01(\x08\x12\x0f\n\x07samples\x18\x0e \x01(\x05\x12\x11\n\tperiod_ms\x18\x10 \x01(\x05*L\n\x0bRotateFlags\x12\x08\n\x04NONE\x10\x00\x12\x10\n\x0cROTATE_90_CW\x10\x01\x12\x0e\n\nROTATE_180\x10\x02\x12\x11\n\rROTATE_90_CCW\x10\x03\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -50,8 +50,8 @@ _ROTATEFLAGS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=628,
-  serialized_end=704,
+  serialized_start=653,
+  serialized_end=729,
 )
 _sym_db.RegisterEnumDescriptor(_ROTATEFLAGS)
 
@@ -115,37 +115,30 @@ _AREALIMITS = _descriptor.Descriptor(
 )
 
 
-_REFERENCIALPROPERTIES = _descriptor.Descriptor(
-  name='ReferencialProperties',
-  full_name='is.ReferencialProperties',
+_REFERENTIALPROPERTIES = _descriptor.Descriptor(
+  name='ReferentialProperties',
+  full_name='is.ReferentialProperties',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='is.ReferencialProperties.id', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
+      name='x', full_name='is.ReferentialProperties.x', index=0,
+      number=1, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='x', full_name='is.ReferencialProperties.x', index=1,
+      name='y', full_name='is.ReferentialProperties.y', index=1,
       number=2, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='y', full_name='is.ReferencialProperties.y', index=2,
-      number=3, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='length', full_name='is.ReferencialProperties.length', index=3,
-      number=4, type=13, cpp_type=3, label=1,
+      name='length', full_name='is.ReferentialProperties.length', index=2,
+      number=3, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -163,7 +156,7 @@ _REFERENCIALPROPERTIES = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=123,
-  serialized_end=196,
+  serialized_end=184,
 )
 
 
@@ -231,50 +224,64 @@ _SKELETONSHEATMAPOPTIONS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='referencial', full_name='is.SkeletonsHeatmapOptions.referencial', index=8,
+      name='frame_id', full_name='is.SkeletonsHeatmapOptions.frame_id', index=8,
+      number=17, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='referential', full_name='is.SkeletonsHeatmapOptions.referential', index=9,
       number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='draw_grid', full_name='is.SkeletonsHeatmapOptions.draw_grid', index=9,
+      name='draw_grid', full_name='is.SkeletonsHeatmapOptions.draw_grid', index=10,
       number=9, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='flip_horizontal', full_name='is.SkeletonsHeatmapOptions.flip_horizontal', index=10,
+      name='flip_horizontal', full_name='is.SkeletonsHeatmapOptions.flip_horizontal', index=11,
       number=10, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='flip_vertical', full_name='is.SkeletonsHeatmapOptions.flip_vertical', index=11,
+      name='flip_vertical', full_name='is.SkeletonsHeatmapOptions.flip_vertical', index=12,
       number=11, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='log_scale', full_name='is.SkeletonsHeatmapOptions.log_scale', index=12,
+      name='log_scale', full_name='is.SkeletonsHeatmapOptions.log_scale', index=13,
       number=12, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='average_coordinates', full_name='is.SkeletonsHeatmapOptions.average_coordinates', index=13,
+      name='average_coordinates', full_name='is.SkeletonsHeatmapOptions.average_coordinates', index=14,
       number=13, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='samples', full_name='is.SkeletonsHeatmapOptions.samples', index=14,
+      name='samples', full_name='is.SkeletonsHeatmapOptions.samples', index=15,
       number=14, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='period_ms', full_name='is.SkeletonsHeatmapOptions.period_ms', index=16,
+      number=16, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -291,16 +298,16 @@ _SKELETONSHEATMAPOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=199,
-  serialized_end=626,
+  serialized_start=187,
+  serialized_end=651,
 )
 
 _SKELETONSHEATMAPOPTIONS.fields_by_name['limits'].message_type = _AREALIMITS
 _SKELETONSHEATMAPOPTIONS.fields_by_name['output_scale'].message_type = google_dot_protobuf_dot_wrappers__pb2._FLOATVALUE
 _SKELETONSHEATMAPOPTIONS.fields_by_name['output_rotate'].enum_type = _ROTATEFLAGS
-_SKELETONSHEATMAPOPTIONS.fields_by_name['referencial'].message_type = _REFERENCIALPROPERTIES
+_SKELETONSHEATMAPOPTIONS.fields_by_name['referential'].message_type = _REFERENTIALPROPERTIES
 DESCRIPTOR.message_types_by_name['AreaLimits'] = _AREALIMITS
-DESCRIPTOR.message_types_by_name['ReferencialProperties'] = _REFERENCIALPROPERTIES
+DESCRIPTOR.message_types_by_name['ReferentialProperties'] = _REFERENTIALPROPERTIES
 DESCRIPTOR.message_types_by_name['SkeletonsHeatmapOptions'] = _SKELETONSHEATMAPOPTIONS
 DESCRIPTOR.enum_types_by_name['RotateFlags'] = _ROTATEFLAGS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -312,12 +319,12 @@ AreaLimits = _reflection.GeneratedProtocolMessageType('AreaLimits', (_message.Me
   ))
 _sym_db.RegisterMessage(AreaLimits)
 
-ReferencialProperties = _reflection.GeneratedProtocolMessageType('ReferencialProperties', (_message.Message,), dict(
-  DESCRIPTOR = _REFERENCIALPROPERTIES,
+ReferentialProperties = _reflection.GeneratedProtocolMessageType('ReferentialProperties', (_message.Message,), dict(
+  DESCRIPTOR = _REFERENTIALPROPERTIES,
   __module__ = 'options_pb2'
-  # @@protoc_insertion_point(class_scope:is.ReferencialProperties)
+  # @@protoc_insertion_point(class_scope:is.ReferentialProperties)
   ))
-_sym_db.RegisterMessage(ReferencialProperties)
+_sym_db.RegisterMessage(ReferentialProperties)
 
 SkeletonsHeatmapOptions = _reflection.GeneratedProtocolMessageType('SkeletonsHeatmapOptions', (_message.Message,), dict(
   DESCRIPTOR = _SKELETONSHEATMAPOPTIONS,

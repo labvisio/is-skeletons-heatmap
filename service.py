@@ -2,31 +2,54 @@ from __future__ import print_function
 
 from is_msgs.image_pb2 import ObjectAnnotations
 from is_wire.core import Channel, Message, Subscription, Logger
-from is_wire.core import ZipkinTracer
+from is_wire.core import Tracer, ZipkinExporter, BackgroundThreadTransport
+from is_wire.core.utils import now
 from utils import load_options
 from heatmap import SkeletonsHeatmap
 
-log = Logger()
+from builtins import super
+
+class MyChannel(Channel):
+    def consume_until(self, deadline):
+        timeout = max([deadline - now(), 0.0])
+        return super().consume(timeout=timeout)
+
+service_name = 'Skeletons.Heatmap'
+log = Logger(name=service_name)
 ops = load_options()
 
-c = Channel(ops.broker_uri)
-sb = Subscription(c)
-service_name = 'Skeletons.Heatmap'
-tracer = ZipkinTracer(host_name=ops.zipkin_host,
-                      port=ops.zipkin_port, service_name=service_name)
+channel = MyChannel(ops.broker_uri)
+subscription = Subscription(channel)
+exporter = ZipkinExporter(
+    service_name=service_name,
+    host_name=ops.zipkin_host,
+    port=ops.zipkin_port,
+    transport=BackgroundThreadTransport(max_batch_size=20),
+)
+
+subscription.subscribe('Skeletons.Localization')
 
 sks_hm = SkeletonsHeatmap(ops)
 
-@tracer.interceptor('Render')
-def on_detections(msg, context):
-    sks = msg.unpack(ObjectAnnotations)
-    sks_hm.update_heatmap(sks)
-    im_pb = sks_hm.get_pb_image()
-    msg = Message()
-    msg.pack(im_pb)
-    msg.set_topic(service_name)
-    msg.add_metadata(context)
-    c.publish(msg)
-
-sb.subscribe('Skeletons.Localization', on_detections)
-c.listen()
+period = ops.period_ms / 1000.0
+deadline = now()
+while True:
+    deadline += period
+    msgs = []
+    while True:
+        try:
+            msgs.append(channel.consume_until(deadline=deadline))
+        except:
+            break
+    
+    span_context = msgs[-1].extract_tracing() if len(msgs) > 0 else None
+    tracer = Tracer(exporter=exporter, span_context=span_context)
+    with tracer.span(name='Render') as span:
+        sks_list = list(map(lambda x: x.unpack(ObjectAnnotations), msgs))
+        sks_hm.update_heatmap(sks_list)
+        im_pb = sks_hm.get_pb_image()
+        msg = Message()
+        msg.topic = service_name
+        msg.pack(im_pb)
+        msg.inject_tracing(span)
+        channel.publish(msg)

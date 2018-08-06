@@ -13,11 +13,10 @@ message AreaLimits {
 }
 
 // x and y in meters and length in pixels
-message ReferencialProperties {
-  int64 id = 1;
-  float x = 2;
-  float y = 3;
-  uint32 length = 4;
+message ReferentialProperties {
+  float x = 1;
+  float y = 2;
+  uint32 length = 3;
 }
 
 enum RotateFlags {
@@ -36,7 +35,8 @@ message SkeletonsHeatmapOptions {
   float bins_step = 6;
   google.protobuf.FloatValue output_scale = 7;
   RotateFlags output_rotate = 15;
-  ReferencialProperties referencial = 8;
+  int64 frame_id = 17;
+  ReferentialProperties referential = 8;
   bool draw_grid = 9;
   bool flip_horizontal = 10;
   bool flip_vertical = 11;
@@ -45,5 +45,8 @@ message SkeletonsHeatmapOptions {
   // if less or equal zero, the histogram will accumulate forever,
   // otherwise N latest samples will be stored to show heatmap of
   // last N samples. The maximum number of samples is 100000.
-  int32 samples = 14; 
+  int32 samples = 14;
+  // Period in milliseconds of the rate that detections will be groupped
+  // must be greater or equal than 200 and less or equal 1000 milliseconds
+  int32 period_ms = 16;
 }
