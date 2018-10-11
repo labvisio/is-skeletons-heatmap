@@ -1,13 +1,14 @@
 from __future__ import print_function
 
+from builtins import super
 from is_msgs.image_pb2 import ObjectAnnotations
 from is_wire.core import Channel, Message, Subscription, Logger
 from is_wire.core import Tracer, ZipkinExporter, BackgroundThreadTransport
 from is_wire.core.utils import now
-from utils import load_options
-from heatmap import SkeletonsHeatmap
 
-from builtins import super
+from .utils import load_options
+from .heatmap import SkeletonsHeatmap
+
 
 class MyChannel(Channel):
     def consume_until(self, deadline):
@@ -27,7 +28,8 @@ exporter = ZipkinExporter(
     transport=BackgroundThreadTransport(max_batch_size=20),
 )
 
-subscription.subscribe('Skeletons.Localization')
+for group_id in ops.group_ids:
+    subscription.subscribe('SkeletonsGrouper.{}.Localization'.format(group_id))
 
 sks_hm = SkeletonsHeatmap(ops)
 
@@ -48,8 +50,6 @@ while True:
         sks_list = list(map(lambda x: x.unpack(ObjectAnnotations), msgs))
         sks_hm.update_heatmap(sks_list)
         im_pb = sks_hm.get_pb_image()
-        msg = Message()
-        msg.topic = service_name
-        msg.pack(im_pb)
+        msg = Message(content=im_pb)
         msg.inject_tracing(span)
-        channel.publish(msg)
+        channel.publish(message=msg, topic=service_name)

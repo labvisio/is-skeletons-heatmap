@@ -1,8 +1,8 @@
+import numpy as np
 from is_wire.core import Channel, Message, Subscription
 from is_msgs.common_pb2 import Tensor
 from is_msgs.image_pb2 import Vertex, ObjectAnnotations
-from utils import to_np
-import numpy as np
+from .utils import to_np
 
 class TransformationFetcher:
   def __init__(self, broker_uri=None):

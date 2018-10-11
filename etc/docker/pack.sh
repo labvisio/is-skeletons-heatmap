@@ -13,9 +13,10 @@ function docker::has_image {
 function docker::build_local {
     tag=$1
     dockerfile=$2
+    folder=$3
     echo "!! Building '${tag}'"
     sleep 2
-    docker build . -f ${dockerfile} -t ${tag} --no-cache --network=host
+    docker build ${folder} -f ${dockerfile} -t ${tag} --no-cache --network=host
 }
 
 function docker::push_image {
@@ -41,15 +42,15 @@ function docker::rebuild_image {
 
 image_dev='is-skeletons-heatmap/dev'
 docker_user="viros"
-remote_tag='is-skeletons-heatmap:1.4'
+remote_tag='is-skeletons-heatmap:0.0.1'
 
 if ! docker::has_image ${image_dev}; then
-    docker::build_local ${image_dev} Dockerfile.dev
+    docker::build_local ${image_dev} Dockerfile.dev ../../
 elif docker::rebuild_image ${image_dev}; then
-    docker::build_local ${image_dev} Dockerfile.dev
+    docker::build_local ${image_dev} Dockerfile.dev ../../
 else
     echo "!! Alreary have image '$image_dev'"
 fi
 
-docker::build_local sks_heatmap Dockerfile
+docker::build_local sks_heatmap Dockerfile ../../
 docker::push_image sks_heatmap ${remote_tag}

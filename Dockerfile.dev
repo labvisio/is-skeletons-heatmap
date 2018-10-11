@@ -1,6 +1,0 @@
-FROM python:3
-
-WORKDIR /tmp
-ADD requirements.txt /tmp/
-RUN pip install --user --upgrade pip       \
- && pip install --user -r requirements.txt

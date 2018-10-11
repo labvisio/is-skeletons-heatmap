@@ -1,11 +1,12 @@
 import sys
 import cv2
 import numpy as np
+
+from is_wire.core import Logger
 from is_msgs.image_pb2 import Image
 from is_msgs.common_pb2 import Tensor, DataType
 from google.protobuf.json_format import Parse
-from options_pb2 import SkeletonsHeatmapOptions
-from is_wire.core import Logger
+from .options_pb2 import SkeletonsHeatmapOptions
 
 def to_pb_image(input_image, encode_format='.jpeg', compression_level=0.8):
     if isinstance(input_image, np.ndarray):
@@ -50,10 +51,13 @@ def load_options():
             except Exception as ex:
                 log.critical(
                     'Unable to load options from \'{}\'. \n{}', op_file, ex)
+                sys.exit(-1)
             except:
                 log.critical('Unable to load options from \'{}\'', op_file)
+                sys.exit(-1)
     except Exception as ex:
         log.critical('Unable to open file \'{}\'', op_file)
+        sys.exit(-1)
     
     message = op.DESCRIPTOR.full_name
     # validation

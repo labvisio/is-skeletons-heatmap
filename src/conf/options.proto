@@ -30,7 +30,7 @@ message SkeletonsHeatmapOptions {
   string broker_uri = 1;
   string zipkin_host = 2;
   uint32 zipkin_port = 3;
-  uint32 topic_id = 4;
+  repeated uint32 group_ids = 4;
   AreaLimits limits = 5;
   float bins_step = 6;
   google.protobuf.FloatValue output_scale = 7;

@@ -2,6 +2,7 @@
   "broker_uri": "amqp://10.10.2.15:30000",
   "zipkin_host": "10.10.2.15",
   "zipkin_port": 30200,
+  "group_ids": [0, 1, 2],
   "limits": {
     "xmin": -2.5,
     "xmax": 9.0,

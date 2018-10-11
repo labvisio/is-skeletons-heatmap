@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='options.proto',
   package='is',
   syntax='proto3',
-  serialized_pb=_b('\n\roptions.proto\x12\x02is\x1a\x1egoogle/protobuf/wrappers.proto\"D\n\nAreaLimits\x12\x0c\n\x04xmin\x18\x01 \x01(\x02\x12\x0c\n\x04xmax\x18\x02 \x01(\x02\x12\x0c\n\x04ymin\x18\x03 \x01(\x02\x12\x0c\n\x04ymax\x18\x04 \x01(\x02\"=\n\x15ReferentialProperties\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\x0e\n\x06length\x18\x03 \x01(\r\"\xd0\x03\n\x17SkeletonsHeatmapOptions\x12\x12\n\nbroker_uri\x18\x01 \x01(\t\x12\x13\n\x0bzipkin_host\x18\x02 \x01(\t\x12\x13\n\x0bzipkin_port\x18\x03 \x01(\r\x12\x10\n\x08topic_id\x18\x04 \x01(\r\x12\x1e\n\x06limits\x18\x05 \x01(\x0b\x32\x0e.is.AreaLimits\x12\x11\n\tbins_step\x18\x06 \x01(\x02\x12\x31\n\x0coutput_scale\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.FloatValue\x12&\n\routput_rotate\x18\x0f \x01(\x0e\x32\x0f.is.RotateFlags\x12\x10\n\x08\x66rame_id\x18\x11 \x01(\x03\x12.\n\x0breferential\x18\x08 \x01(\x0b\x32\x19.is.ReferentialProperties\x12\x11\n\tdraw_grid\x18\t \x01(\x08\x12\x17\n\x0f\x66lip_horizontal\x18\n \x01(\x08\x12\x15\n\rflip_vertical\x18\x0b \x01(\x08\x12\x11\n\tlog_scale\x18\x0c \x01(\x08\x12\x1b\n\x13\x61verage_coordinates\x18\r \x01(\x08\x12\x0f\n\x07samples\x18\x0e \x01(\x05\x12\x11\n\tperiod_ms\x18\x10 \x01(\x05*L\n\x0bRotateFlags\x12\x08\n\x04NONE\x10\x00\x12\x10\n\x0cROTATE_90_CW\x10\x01\x12\x0e\n\nROTATE_180\x10\x02\x12\x11\n\rROTATE_90_CCW\x10\x03\x62\x06proto3')
+  serialized_pb=_b('\n\roptions.proto\x12\x02is\x1a\x1egoogle/protobuf/wrappers.proto\"D\n\nAreaLimits\x12\x0c\n\x04xmin\x18\x01 \x01(\x02\x12\x0c\n\x04xmax\x18\x02 \x01(\x02\x12\x0c\n\x04ymin\x18\x03 \x01(\x02\x12\x0c\n\x04ymax\x18\x04 \x01(\x02\"=\n\x15ReferentialProperties\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\x0e\n\x06length\x18\x03 \x01(\r\"\xd1\x03\n\x17SkeletonsHeatmapOptions\x12\x12\n\nbroker_uri\x18\x01 \x01(\t\x12\x13\n\x0bzipkin_host\x18\x02 \x01(\t\x12\x13\n\x0bzipkin_port\x18\x03 \x01(\r\x12\x11\n\tgroup_ids\x18\x04 \x03(\r\x12\x1e\n\x06limits\x18\x05 \x01(\x0b\x32\x0e.is.AreaLimits\x12\x11\n\tbins_step\x18\x06 \x01(\x02\x12\x31\n\x0coutput_scale\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.FloatValue\x12&\n\routput_rotate\x18\x0f \x01(\x0e\x32\x0f.is.RotateFlags\x12\x10\n\x08\x66rame_id\x18\x11 \x01(\x03\x12.\n\x0breferential\x18\x08 \x01(\x0b\x32\x19.is.ReferentialProperties\x12\x11\n\tdraw_grid\x18\t \x01(\x08\x12\x17\n\x0f\x66lip_horizontal\x18\n \x01(\x08\x12\x15\n\rflip_vertical\x18\x0b \x01(\x08\x12\x11\n\tlog_scale\x18\x0c \x01(\x08\x12\x1b\n\x13\x61verage_coordinates\x18\r \x01(\x08\x12\x0f\n\x07samples\x18\x0e \x01(\x05\x12\x11\n\tperiod_ms\x18\x10 \x01(\x05*L\n\x0bRotateFlags\x12\x08\n\x04NONE\x10\x00\x12\x10\n\x0cROTATE_90_CW\x10\x01\x12\x0e\n\nROTATE_180\x10\x02\x12\x11\n\rROTATE_90_CCW\x10\x03\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -50,8 +50,8 @@ _ROTATEFLAGS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=653,
-  serialized_end=729,
+  serialized_start=654,
+  serialized_end=730,
 )
 _sym_db.RegisterEnumDescriptor(_ROTATEFLAGS)
 
@@ -189,9 +189,9 @@ _SKELETONSHEATMAPOPTIONS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='topic_id', full_name='is.SkeletonsHeatmapOptions.topic_id', index=3,
-      number=4, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
+      name='group_ids', full_name='is.SkeletonsHeatmapOptions.group_ids', index=3,
+      number=4, type=13, cpp_type=3, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
@@ -299,7 +299,7 @@ _SKELETONSHEATMAPOPTIONS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=187,
-  serialized_end=651,
+  serialized_end=652,
 )
 
 _SKELETONSHEATMAPOPTIONS.fields_by_name['limits'].message_type = _AREALIMITS

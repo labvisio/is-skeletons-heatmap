@@ -1,6 +1,2 @@
-is-wire==1.1.1
-is-msgs==1.1.7
-opencv-python==3.4.1.15
-numpy==1.14.3
-scipy==1.1.0
-matplotlib==2.2.2
+ # installs dependencies from ./setup.py, and the package itself, in editable mode
+ -e .
