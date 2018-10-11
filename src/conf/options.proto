@@ -30,19 +30,33 @@ message SkeletonsHeatmapOptions {
   string broker_uri = 1;
   string zipkin_host = 2;
   uint32 zipkin_port = 3;
+  // List of ids from SkeletonsGrouper services used as source to create the heatmap
   repeated uint32 group_ids = 4;
+  // Dimensions of output occupation map according to given frame_id
   AreaLimits limits = 5;
+  // Step size used to create the 2D histogram
   float bins_step = 6;
+  // Scale factor applied on output image
   google.protobuf.FloatValue output_scale = 7;
+  // Rotate applied on output image
   RotateFlags output_rotate = 15;
   int64 frame_id = 17;
+  // Localization and arrows size of coordinate referential frame on output image.
   ReferentialProperties referential = 8;
+  // If true, output image will be generated with a grid with
+  // one meter step on both axes
   bool draw_grid = 9;
+  // Flips horizontally output image
   bool flip_horizontal = 10;
+  // Flips vertically output image
   bool flip_vertical = 11;
+  // If true, the histogram will be created with a logarithm scale. 
+  // Stronglly recommended enable it in case of a huge number of samples.
   bool log_scale = 12;
+  // If true, each skeleton localization will be converted to a single point
+  // on 3D space, corresponding to the mean of all coordinate joints.
   bool average_coordinates = 13;
-  // if less or equal zero, the histogram will accumulate forever,
+  // If less or equal zero, the histogram will accumulate forever,
   // otherwise N latest samples will be stored to show heatmap of
   // last N samples. The maximum number of samples is 100000.
   int32 samples = 14;
