@@ -1,3 +1,0 @@
-[console_scripts]
-is-skeletons-heatmap = is_skeletons_heatmap.service:main
-

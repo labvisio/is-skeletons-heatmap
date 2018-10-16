@@ -42,7 +42,7 @@ function docker::rebuild_image {
 
 image_dev='is-skeletons-heatmap/dev'
 docker_user="viros"
-remote_tag='is-skeletons-heatmap:0.0.1'
+remote_tag='is-skeletons-heatmap:0.0.2'
 
 if ! docker::has_image ${image_dev}; then
     docker::build_local ${image_dev} Dockerfile.dev ../../

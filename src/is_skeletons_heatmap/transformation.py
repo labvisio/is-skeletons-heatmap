@@ -1,7 +1,7 @@
 import numpy as np
 from is_wire.core import Channel, Message, Subscription
-from is_msgs.common_pb2 import Tensor
 from is_msgs.image_pb2 import Vertex, ObjectAnnotations
+from is_msgs.camera_pb2 import FrameTransformation
 from .utils import to_np
 
 class TransformationFetcher:
@@ -26,18 +26,18 @@ class TransformationFetcher:
     except:
       self.subscription.unsubscribe(topic)
       return False
-    tf = msg.unpack(Tensor)
+    transformation = msg.unpack(FrameTransformation)
     if _from not in self.transformations:
       self.transformations[_from] = {}
-    self.transformations[_from][_to] = to_np(tf)
+    self.transformations[_from][_to] = to_np(transformation.tf)
     return True
 
 
 def vertex_to_np(v, homogeneo=False):
     if homogeneo:
-        return np.array([v.x, v.y, v.z, 1.0])[:, np.newaxis]
+        return np.array([v.x, v.y, v.z, 1.0])
     else:
-        return np.array([v.x, v.y, v.z])[:, np.newaxis]
+        return np.array([v.x, v.y, v.z])
 
 
 def np_to_vertex(v):
