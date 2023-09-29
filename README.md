@@ -16,7 +16,7 @@ This service creates an occupation map using skeletons localizations.
 
 ## Configuration
 
-The behavior of the service can be customized by passing a JSON configuration file as the first argument, e.g: `is-broker-events etc/conf/options.json`. The schema for this file can be found in [`is_broker_events/conf/options.proto`]. An example configuration file can be found in [`etc/conf/options.json`].
+The behavior of the service can be customized by passing a JSON configuration file as the first argument, e.g: `is-skeletons-heatmap etc/conf/options.json`. The schema for this file can be found in [`is_skeletons_heatmap/conf/options.proto`]. An example configuration file can be found in [`etc/conf/options.json`].
 
 <!-- Links -->
 [SkeletonsGrouper]: https://github.com/labviros/is-skeletons-grouper
@@ -24,5 +24,5 @@ The behavior of the service can be customized by passing a JSON configuration fi
 [ObjectAnnotations]: https://github.com/labvisio/is-msgs/tree/master/docs#objectannotations
 
 <!-- Files -->
-[`is_broker_events/conf/options.proto`]: https://github.com/labvisio/is-skeletons-heatmap/blob/master/is_skeletons_heatmap/conf/options.proto
+[`is_skeletons_heatmap/conf/options.proto`]: https://github.com/labvisio/is-skeletons-heatmap/blob/master/is_skeletons_heatmap/conf/options.proto
 [`etc/conf/options.json`]: https://github.com/labvisio/is-skeletons-heatmap/blob/master/etc/conf/ufes_options.json
