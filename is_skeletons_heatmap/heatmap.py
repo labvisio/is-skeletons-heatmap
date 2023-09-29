@@ -1,5 +1,5 @@
 from collections import deque
-from typing import List, TypedDict
+from typing import List, TypedDict, Deque
 
 import cv2
 import matplotlib.pyplot as plt
@@ -54,7 +54,7 @@ class SkeletonsHeatmap:
             self.log.critical("Number of samples must be less or equal than 100000.")
         self._infinity_mode = self._options.samples < 1
         maxlen = max(0, self._options.samples)
-        self._sparse_histograms = deque(iterable=[], maxlen=maxlen)
+        self._sparse_histograms: Deque[scipy.sparse.csr_matrix] = deque(iterable=[], maxlen=maxlen)
         self._tf_fetcher = TransformationFetcher(broker_uri=self._options.broker_uri)
 
     def update_heatmap(self, list_annotations: List[ObjectAnnotations]) -> None:
@@ -133,7 +133,7 @@ class SkeletonsHeatmap:
         coordinates = [
             getattr(keypoint.position, axis) for keypoint in skeleton.keypoints
         ]
-        return [np.mean(np.array(coordinates))] if mean else coordinates
+        return [float(np.mean(np.array(coordinates)))] if mean else coordinates
 
     def _draw_grid(self) -> None:
         steps = lambda smin, smax: np.arange(np.floor(smin), np.ceil(smax) + 1.0, 1.0)

@@ -49,7 +49,7 @@ def load_options(logger: Logger) -> SkeletonsHeatmapOptions:
     return options
 
 
-def main():
+def main() -> None:
     service_name = "SkeletonsHeatmap"
     log = Logger(name=service_name)
     options = load_options(logger=log)

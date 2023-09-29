@@ -1,5 +1,5 @@
 import socket
-from typing import Any, Optional
+from typing import Any, Optional, Dict
 
 import numpy as np
 import numpy.typing as npt
@@ -11,7 +11,7 @@ from is_skeletons_heatmap.logger import Logger
 from is_skeletons_heatmap.utils import array2vertex, tensor2array, vertex2array
 
 
-def transform_vertex(vertex: Vertex, transformation: npt.NDArray[np.float32]):
+def transform_vertex(vertex: Vertex, transformation: npt.NDArray[np.float32]) -> Vertex:
     new_vertex = np.matmul(
         transformation,
         vertex2array(
@@ -40,14 +40,14 @@ def transform_object_annotations(
 
 
 class TransformationFetcher:
-    def __init__(self, broker_uri: str):
+    def __init__(self, broker_uri: str) -> None:
         self.log = Logger("TransformationFetcher")
         self.channel = Channel(uri=broker_uri, exchange="is")
         self.subscription = Subscription(
             channel=self.channel,
             name="TransformationFetcher",
         )
-        self.transformations = {}
+        self.transformations: Dict[int, npt.NDArray[Any]] = {}
 
     def get_transformation(self, src: int, dst: int) -> Optional[npt.NDArray[Any]]:
         if src in self.transformations and dst in self.transformations[src]:

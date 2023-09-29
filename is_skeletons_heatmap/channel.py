@@ -27,6 +27,6 @@ class CustomChannel(Channel):
                 break
         return messages
 
-    def consume_until(self, deadline: float):
+    def consume_until(self, deadline: float) -> Message:
         timeout = max([deadline - now(), 0.0])
         return self.consume(timeout=timeout)
