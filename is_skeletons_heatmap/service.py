@@ -14,7 +14,6 @@ from is_skeletons_heatmap.heatmap import SkeletonsHeatmap
 from is_skeletons_heatmap.logger import Logger
 
 
-
 def span_duration_ms(span: Span) -> float:
     interval = dp.parse(span.end_time) - dp.parse(span.start_time)
     return interval.total_seconds() * 1000.0
@@ -25,7 +24,9 @@ def unpack_all(messages: List[Message]) -> List[ObjectAnnotations]:
 
 
 def load_options(logger: Logger) -> SkeletonsHeatmapOptions:
-    op_file = sys.argv[1] if len(sys.argv) > 1 else "/etc/is-skeletons-heatmap/options.json"
+    op_file = (
+        sys.argv[1] if len(sys.argv) > 1 else "/etc/is-skeletons-heatmap/options.json"
+    )
     try:
         with open(op_file, "r", encoding="utf-8") as file:
             try:
@@ -66,7 +67,7 @@ def main():
     period = options.period_ms / 1000.0
 
     while True:
-        messages = channel.consume_for(duration=period)
+        messages = channel.consume_for(period=period)
         span_context = messages[-1].extract_tracing() if len(messages) > 0 else None
 
         tracer = Tracer(exporter=exporter, span_context=span_context)
@@ -80,7 +81,7 @@ def main():
             heatmap.update_heatmap(list_annotations=list_annotations)
             update_span = _span
 
-        with tracer.span(name="pack_and_publish_heatmap") as _span:
+        with tracer.span(name="pack_and_publish_heatmap"):
             im_pb = heatmap.get_pb_image()
             msg = Message(content=im_pb)
             msg.inject_tracing(span)
