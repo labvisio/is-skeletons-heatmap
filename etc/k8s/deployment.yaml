@@ -27,7 +27,8 @@ spec:
           - name: options
             mountPath: /conf/
         env:
-          - name: LOG_VEL
+          - name: LOG_LEVEL
+            value: "DEBUG"
       volumes:
       - name: options
         configMap:
