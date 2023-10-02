@@ -1,15 +1,17 @@
 {
-  "broker_uri": "amqp://192.168.1.105:30000",
-  "zipkin_host": "192.168.1.105",
+  "broker_uri": "amqp://10.20.5.2:30000",
+  "zipkin_host": "10.20.5.2",
   "zipkin_port": 30200,
-  "group_ids": [0],
+  "group_ids": [
+    0
+  ],
   "limits": {
     "xmin": -4.0,
     "xmax": 4.0,
-    "ymin": -2.5,
-    "ymax": 2.5 
+    "ymin": -4.0,
+    "ymax": 4.0
   },
-  "bins_step": 0.025,
+  "bins_step": 0.05,
   "output_scale": 3.0,
   "output_rotate": "NONE",
   "referential": {
@@ -19,10 +21,10 @@
   },
   "frame_id": 1000,
   "draw_grid": true,
-  "flip_horizontal": true,
-  "flip_vertical": false,
+  "flip_horizontal": false,
+  "flip_vertical": true,
   "log_scale": true,
   "average_coordinates": false,
-  "samples": 100000,
+  "samples": 10000,
   "period_ms": 200
 }

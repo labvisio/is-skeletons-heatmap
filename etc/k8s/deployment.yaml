@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: is-skeletons-heatmap
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: is-skeletons-heatmap
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: is-skeletons-heatmap
+    spec:
+      containers:
+      - name: service
+        image: labvisio/is-skeletons-heatmap:0.0.3
+        command: ["is-skeletons-heatmap"]
+        args: ["/conf/options.json"]
+        imagePullPolicy: Always
+        resources:
+          limits: 
+            cpu: "1"
+            memory: 256Mi
+        volumeMounts:
+          - name: options
+            mountPath: /conf/
+        env:
+          - name: LOG_VEL
+      volumes:
+      - name: options
+        configMap:
+          name: is-skeletons-heatmap
+          items:
+          - key: options
+            path: options.json
