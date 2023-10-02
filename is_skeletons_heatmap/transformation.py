@@ -47,7 +47,7 @@ class TransformationFetcher:
             channel=self.channel,
             name="TransformationFetcher",
         )
-        self.transformations: Dict[int, npt.NDArray[Any]] = {}
+        self.transformations: Dict[int, Dict[int, npt.NDArray[Any]]] = {}
 
     def get_transformation(self, src: int, dst: int) -> Optional[npt.NDArray[Any]]:
         if src in self.transformations and dst in self.transformations[src]:
