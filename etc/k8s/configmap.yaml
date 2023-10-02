@@ -8,7 +8,7 @@ data:
     {
       "broker_uri": "amqp://rabbitmq.default",
       "zipkin_host": "zipkin.default",
-      "zipkin_port": 30200,
+      "zipkin_port": 9411,
       "group_ids": [
         0
       ],
