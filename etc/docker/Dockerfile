@@ -36,7 +36,7 @@ RUN set -eux; \
 
 WORKDIR /opt/is-skeletons-heatmap
 COPY --from=build /opt/is-skeletons-heatmap/.venv /opt/is-skeletons-heatmap/.venv
-COPY --from=build /opt/is-skeletons-heatmap/etc/conf/ufes_options.json /etc/is-skeletons-heatmap/options.json
+COPY --from=build /opt/is-skeletons-heatmap/etc/conf/options.json /etc/is-skeletons-heatmap/options.json
 
 ENV VIRTUAL_ENV=/opt/is-skeletons-heatmap/.venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
